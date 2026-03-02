@@ -1,0 +1,373 @@
+\chapter{Multi-\/\+Variant ESP32-\/\+S3 BLE Mesh Firmware }
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s}{}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s}\index{Multi-\/Variant ESP32-\/S3 BLE Mesh Firmware@{Multi-\/Variant ESP32-\/S3 BLE Mesh Firmware}}
+\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md0}%
+\Hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md0}%
+
+
+This firmware supports compiling multiple variants for different sensor configurations, all from a single codebase. Use conditional compilation to enable/\+disable sensors and customize GPIO pins.\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md1}{}\doxysection{\texorpdfstring{Quick Start}{Quick Start}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md1}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md2}{}\doxysubsection{\texorpdfstring{Build for Standard Configuration (Both Sensors)}{Build for Standard Configuration (Both Sensors)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md2}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3\ \ \ \ \ \ \ \ \ \ \ \#\ Build}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3\ -\/t\ upload\ \#\ Upload\ to\ device}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md3}{}\doxysubsection{\texorpdfstring{Build for AHT20 Only (Temp/\+\+Humidity)}{Build for AHT20 Only (Temp/\+\+Humidity)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/aht20-\/only\ -\/t\ upload}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md4}{}\doxysubsection{\texorpdfstring{Build for MAX30101 Only (Heart Rate/\+\+Sp\+O2)}{Build for MAX30101 Only (Heart Rate/\+\+Sp\+O2)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/max30101-\/only\ -\/t\ upload}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md5}{}\doxysubsection{\texorpdfstring{Build with Custom Pins}{Build with Custom Pins}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/custom\ -\/t\ upload}
+\DoxyCodeLine{\#\ Edit\ platformio.ini\ esp32s3-\/custom\ section\ to\ customize\ GPIO\ pins}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md6}{}\doxysection{\texorpdfstring{Configuration System}{Configuration System}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md6}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md7}{}\doxysubsection{\texorpdfstring{How It Works}{How It Works}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md7}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{config.\+h}} -\/ Central configuration file with sensor enable/\+disable flags and GPIO pin definitions
+\item {\bfseries{platformio.\+ini}} -\/ Build environments with {\ttfamily build\+\_\+flags} to override config.\+h defaults
+\item {\bfseries{aht20.\+c/\+h, max30101.\+c/\+h}} -\/ Wrapped with {\ttfamily \#ifdef} guards; stub functions when disabled
+\item {\bfseries{main.\+c}} -\/ Conditional sensor initialization based on config.\+h
+\end{DoxyEnumerate}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md8}{}\doxysubsection{\texorpdfstring{Configuration Hierarchy}{Configuration Hierarchy}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md8}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio.ini\ build\_flags\ (-\/D\ defines)}
+\DoxyCodeLine{\ \ \ \ ↓\ (overrides)}
+\DoxyCodeLine{config.h\ \#define\ values}
+\DoxyCodeLine{\ \ \ \ ↓\ (used\ by)}
+\DoxyCodeLine{aht20.c/h,\ max30101.c/h}
+\DoxyCodeLine{\ \ \ \ ↓\ (controlled\ by)}
+\DoxyCodeLine{main.c\ \#ifdef\ blocks}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md9}{}\doxysection{\texorpdfstring{Available Build Environments}{Available Build Environments}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md9}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md10}{}\doxysubsection{\texorpdfstring{1. {\bfseries{esp32s3}} (DEFAULT -\/ Both Sensors)}{1. {\bfseries{esp32s3}} (DEFAULT -\/ Both Sensors)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md10}
+{\bfseries{Sensors:\+}} AHT20 + MAX30101 ~\newline
+ {\bfseries{Use when:\+}} You have both sensors connected
+
+{\bfseries{Hardware Setup:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{AHT20\ (I2C\ Bus\ 0):}
+\DoxyCodeLine{\ \ -\/\ SDA:\ GPIO\ 4}
+\DoxyCodeLine{\ \ -\/\ SCL:\ GPIO\ 5}
+\DoxyCodeLine{\ \ -\/\ Power:\ 3.3V}
+\DoxyCodeLine{\ \ -\/\ GND:\ GND}
+\DoxyCodeLine{}
+\DoxyCodeLine{MAX30101\ (I2C\ Bus\ 1):}
+\DoxyCodeLine{\ \ -\/\ SDA:\ GPIO\ 6}
+\DoxyCodeLine{\ \ -\/\ SCL:\ GPIO\ 7}
+\DoxyCodeLine{\ \ -\/\ INIT:\ GPIO\ 16}
+\DoxyCodeLine{\ \ -\/\ Power:\ 3.3V}
+\DoxyCodeLine{\ \ -\/\ GND:\ GND}
+
+\end{DoxyCode}
+
+
+{\bfseries{Build \& Upload:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3\ -\/t\ upload}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md11}{}\doxysubsection{\texorpdfstring{2. {\bfseries{esp32s3-\/aht20-\/only}} (AHT20 ONLY)}{2. {\bfseries{esp32s3-\/aht20-\/only}} (AHT20 ONLY)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md11}
+{\bfseries{Sensors:\+}} AHT20 only ~\newline
+ {\bfseries{Use when:\+}} You only have the temperature/\+humidity sensor
+
+{\bfseries{Hardware Setup:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{AHT20\ (I2C\ Bus\ 0):}
+\DoxyCodeLine{\ \ -\/\ SDA:\ GPIO\ 4}
+\DoxyCodeLine{\ \ -\/\ SCL:\ GPIO\ 5}
+\DoxyCodeLine{\ \ -\/\ Power:\ 3.3V}
+\DoxyCodeLine{\ \ -\/\ GND:\ GND}
+\DoxyCodeLine{}
+\DoxyCodeLine{(No\ MAX30101\ connected)}
+
+\end{DoxyCode}
+
+
+{\bfseries{Build \& Upload:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/aht20-\/only\ -\/t\ upload}
+
+\end{DoxyCode}
+
+
+{\bfseries{Data Published:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Payload\ (14\ bytes):}
+\DoxyCodeLine{\ \ [0-\/1]:\ \ \ temp\_x100\ (actual\ temperature)}
+\DoxyCodeLine{\ \ [2-\/3]:\ \ \ rh\_x100\ (actual\ humidity)}
+\DoxyCodeLine{\ \ [4-\/11]:\ \ 0x00\ (no\ MAX30101\ data)}
+\DoxyCodeLine{\ \ [12-\/13]:\ 0x00\ (no\ HR/SpO2)}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md12}{}\doxysubsection{\texorpdfstring{3. {\bfseries{esp32s3-\/max30101-\/only}} (MAX30101 ONLY)}{3. {\bfseries{esp32s3-\/max30101-\/only}} (MAX30101 ONLY)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md12}
+{\bfseries{Sensors:\+}} MAX30101 only ~\newline
+ {\bfseries{Use when:\+}} You only have the heart rate/\+\+Sp\+O2 sensor
+
+{\bfseries{Hardware Setup:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(No\ AHT20\ connected)}
+\DoxyCodeLine{}
+\DoxyCodeLine{MAX30101\ (I2C\ Bus\ 1):}
+\DoxyCodeLine{\ \ -\/\ SDA:\ GPIO\ 6}
+\DoxyCodeLine{\ \ -\/\ SCL:\ GPIO\ 7}
+\DoxyCodeLine{\ \ -\/\ INIT:\ GPIO\ 16}
+\DoxyCodeLine{\ \ -\/\ Power:\ 3.3V}
+\DoxyCodeLine{\ \ -\/\ GND:\ GND}
+
+\end{DoxyCode}
+
+
+{\bfseries{Build \& Upload:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/max30101-\/only\ -\/t\ upload}
+
+\end{DoxyCode}
+
+
+{\bfseries{Data Published:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Payload\ (14\ bytes):}
+\DoxyCodeLine{\ \ [0-\/3]:\ \ \ 0x00\ (no\ AHT20\ data)}
+\DoxyCodeLine{\ \ [4-\/7]:\ \ \ raw\ RED\ (actual\ sensor\ data)}
+\DoxyCodeLine{\ \ [8-\/11]:\ \ raw\ IR\ (actual\ sensor\ data)}
+\DoxyCodeLine{\ \ [12]:\ \ \ \ heart\_rate\ (actual\ HR)}
+\DoxyCodeLine{\ \ [13]:\ \ \ \ spo2\ (actual\ SpO2)}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md13}{}\doxysubsection{\texorpdfstring{4. {\bfseries{esp32s3-\/custom}} (TEMPLATE -\/ Edit for Your Pins)}{4. {\bfseries{esp32s3-\/custom}} (TEMPLATE -\/ Edit for Your Pins)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md13}
+{\bfseries{Use when:\+}} Your sensors are on different GPIO pins
+
+{\bfseries{Steps to Customize:\+}}
+
+
+\begin{DoxyEnumerate}
+\item Edit {\ttfamily platformio.\+ini} and find the {\ttfamily \+[env:\+esp32s3-\/custom]\+} section:\+
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[env:esp32s3-\/custom]}
+\DoxyCodeLine{platform\ =\ espressif32}
+\DoxyCodeLine{board\ =\ esp32-\/s3-\/devkitc-\/1}
+\DoxyCodeLine{framework\ =\ espidf}
+\DoxyCodeLine{upload\_port\ =\ COM8}
+\DoxyCodeLine{monitor\_port\ =\ COM8}
+\DoxyCodeLine{monitor\_speed\ =\ 115200}
+\DoxyCodeLine{build\_flags\ =\ }
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_AHT20=1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Set\ to\ 0\ to\ disable\ AHT20}
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_MAX30101=1\ \ \ \ \ \ \ \ \ \ \ \ \#\ Set\ to\ 0\ to\ disable\ MAX30101}
+\DoxyCodeLine{\ \ \ \ ;-\/-\/-\/-\/-\/-\/-\/-\/\ CUSTOMIZE\ THESE\ GPIO\ PINS\ -\/-\/-\/-\/-\/-\/-\/-\/}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_I2C\_PORT=0\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ I2C\ bus\ number}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_SDA\_GPIO=4\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ ←\ Change\ these}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_SCL\_GPIO=5\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ ←\ Change\ these}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_I2C\_PORT=1\ \ \ \ \ \ \ \ \ \ \#\ I2C\ bus\ number}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_SDA\_GPIO=6\ \ \ \ \ \ \ \ \ \ \#\ ←\ Change\ these}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_SCL\_GPIO=7\ \ \ \ \ \ \ \ \ \ \#\ ←\ Change\ these}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_INIT\_GPIO=16\ \ \ \ \ \ \ \ \#\ ←\ Change\ this}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Replace the GPIO numbers with your wiring:\+
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Example:\ AHT20\ on\ GPIO\ 8,9\ and\ MAX30101\ on\ GPIO\ 10,11,12}
+\DoxyCodeLine{build\_flags\ =\ }
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_AHT20=1}
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_MAX30101=1}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_I2C\_PORT=0}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_SDA\_GPIO=8}
+\DoxyCodeLine{\ \ \ \ -\/DAHT20\_SCL\_GPIO=9}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_I2C\_PORT=1}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_SDA\_GPIO=10}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_SCL\_GPIO=11}
+\DoxyCodeLine{\ \ \ \ -\/DMAX30101\_INIT\_GPIO=12}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item Build and upload:\+
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/custom\ -\/t\ upload}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md14}{}\doxysection{\texorpdfstring{Configuration Reference}{Configuration Reference}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md14}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md15}{}\doxysubsection{\texorpdfstring{config.\+h Flags}{config.\+h Flags}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md15}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Define  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Default  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Purpose  \\
+{\ttfamily ENABLE\+\_\+\+AHT20}  &1  &Enable AHT20 sensor (0=disabled)  \\
+{\ttfamily ENABLE\+\_\+\+MAX30101}  &1  &Enable MAX30101 sensor (0=disabled)  \\
+{\ttfamily AHT20\+\_\+\+I2\+C\+\_\+\+PORT}  &0  &I2C bus for AHT20 (0 or 1)  \\
+{\ttfamily AHT20\+\_\+\+SDA\+\_\+\+GPIO}  &4  &SDA pin for AHT20  \\
+{\ttfamily AHT20\+\_\+\+SCL\+\_\+\+GPIO}  &5  &SCL pin for AHT20  \\
+{\ttfamily MAX30101\+\_\+\+I2\+C\+\_\+\+PORT}  &1  &I2C bus for MAX30101 (0 or 1)  \\
+{\ttfamily MAX30101\+\_\+\+SDA\+\_\+\+GPIO}  &6  &SDA pin for MAX30101  \\
+{\ttfamily MAX30101\+\_\+\+SCL\+\_\+\+GPIO}  &7  &SCL pin for MAX30101  \\
+{\ttfamily MAX30101\+\_\+\+INIT\+\_\+\+GPIO}  &16  &INIT pin for MAX30101  \\
+\end{DoxyTable}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md16}{}\doxysubsection{\texorpdfstring{How to Override Defaults}{How to Override Defaults}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md16}
+{\bfseries{Option 1:\+ Edit config.\+h (Permanent)}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ main/config.h}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ ENABLE\_AHT20\ 0\ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Disable\ AHT20}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ ENABLE\_MAX30101\ 1\ \ \ \ \ \ }\textcolor{comment}{//\ Enable\ MAX30101}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ MAX30101\_SDA\_GPIO\ 10\ \ \ }\textcolor{comment}{//\ Use\ GPIO\ 10\ instead\ of\ 6}}
+
+\end{DoxyCode}
+
+
+{\bfseries{Option 2:\+ Use platformio.\+ini build\+\_\+flags (Temporary, per environment)}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[env:my-\/variant]}
+\DoxyCodeLine{build\_flags\ =\ -\/DENABLE\_AHT20=0\ -\/DENABLE\_MAX30101=1\ -\/DMAX30101\_SDA\_GPIO=10}
+
+\end{DoxyCode}
+
+
+{\bfseries{Option 3:\+ Command-\/line build flags}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3\ -\/-\/build-\/flag="{}-\/DENABLE\_AHT20=0"{}}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md17}{}\doxysection{\texorpdfstring{Payload Format}{Payload Format}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md17}
+All variants publish the same 14-\/byte payload structure:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Byte\ \ Field\ \ \ \ \ \ \ \ \ Type\ \ \ \ \ \ Size\ \ Notes}
+\DoxyCodeLine{─────────────────────────────────────────────────────────}
+\DoxyCodeLine{0-\/1\ \ \ temp\_x100\ \ \ \ \ int16\_t\ \ \ 2\ \ \ \ \ Temperature\ ×\ 100\ (°C)}
+\DoxyCodeLine{2-\/3\ \ \ rh\_x100\ \ \ \ \ \ \ uint16\_t\ \ 2\ \ \ \ \ Humidity\ ×\ 100\ (\%)}
+\DoxyCodeLine{4-\/7\ \ \ raw\_red\ \ \ \ \ \ \ uint32\_t\ \ 4\ \ \ \ \ MAX30101\ RED\ channel}
+\DoxyCodeLine{8-\/11\ \ raw\_ir\ \ \ \ \ \ \ \ uint32\_t\ \ 4\ \ \ \ \ MAX30101\ IR\ channel}
+\DoxyCodeLine{12\ \ \ \ heart\_rate\ \ \ \ uint8\_t\ \ \ 1\ \ \ \ \ Heart\ rate\ (bpm)}
+\DoxyCodeLine{13\ \ \ \ spo2\ \ \ \ \ \ \ \ \ \ uint8\_t\ \ \ 1\ \ \ \ \ SpO2\ (\%)}
+\DoxyCodeLine{─────────────────────────────────────────────────────────}
+\DoxyCodeLine{\ \ \ \ \ \ TOTAL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 14\ \ \ \ All\ little-\/endian}
+
+\end{DoxyCode}
+
+
+{\bfseries{When sensor is disabled:\+}}
+\begin{DoxyItemize}
+\item Fields are set to 0x00
+\item No I2C initialization attempts
+\item No RX sampling task spawned
+\item Full code is eliminated by compiler
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md18}{}\doxysection{\texorpdfstring{Compile-\/\+Time vs Runtime Configuration}{Compile-\/\+Time vs Runtime Configuration}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md18}
+This system uses {\bfseries{compile-\/time configuration}} (preprocessor \+\#ifdefs), NOT runtime configuration. Benefits:\+
+
+✅ {\bfseries{No runtime overhead}} -\/ Disabled code completely removed ~\newline
+ ✅ {\bfseries{Smaller binary size}} -\/ Only compiled code is linked ~\newline
+ ✅ {\bfseries{Zero branches}} -\/ No runtime if-\/statements for disabled features ~\newline
+ ✅ {\bfseries{Simple to understand}} -\/ Clear config.\+h and platformio.\+ini ~\newline
+
+
+{\bfseries{Trade-\/off:\+}} Must recompile to change sensor configuration (no over-\/the-\/air reconfiguration)\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md19}{}\doxysection{\texorpdfstring{Troubleshooting}{Troubleshooting}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md19}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md20}{}\doxysubsection{\texorpdfstring{Build fails with "{}undefined reference to axt20\+\_\+init"{}}{Build fails with "{}undefined reference to axt20\+\_\+init"{}}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md20}
+
+\begin{DoxyItemize}
+\item {\bfseries{Cause:\+}} Trying to call sensor function without it being compiled
+\item {\bfseries{Solution:\+}} Check that sensor is enabled in config.\+h or build\+\_\+flags
+\item {\bfseries{Check:\+}} Run {\ttfamily platformio run -\/v} to see actual build flags
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md21}{}\doxysubsection{\texorpdfstring{I2C address conflicts (both sensors on same bus)}{I2C address conflicts (both sensors on same bus)}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md21}
+
+\begin{DoxyItemize}
+\item {\bfseries{Solution:\+}} By default, sensors use different I2C buses
+\item {\bfseries{If needed:\+}} Edit {\ttfamily AHT20\+\_\+\+I2\+C\+\_\+\+PORT} and {\ttfamily MAX30101\+\_\+\+I2\+C\+\_\+\+PORT} in config.\+h or platformio.\+ini
+\item {\bfseries{Note:\+}} Ensure I2C buses are initialized in the I2C driver code
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md22}{}\doxysubsection{\texorpdfstring{GPIO pin conflicts}{GPIO pin conflicts}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md22}
+
+\begin{DoxyItemize}
+\item {\bfseries{Cause:\+}} Two sensors trying to use same GPIO
+\item {\bfseries{Solution:\+}} Assign different pins in config.\+h or build\+\_\+flags
+\item {\bfseries{Check:\+}} Verify your wiring diagram matches the configuration
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md23}{}\doxysubsection{\texorpdfstring{Sensor stuck during initialization}{Sensor stuck during initialization}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md23}
+
+\begin{DoxyItemize}
+\item {\bfseries{Check:\+}} Are GPIO pins correct?
+\item {\bfseries{Check:\+}} Is power supply adequate? (AHT20 needs \texorpdfstring{$\sim$}{\string~}5mA, MAX30101 \texorpdfstring{$\sim$}{\string~}20mA)
+\item {\bfseries{Check:\+}} Is I2C bus initialized for both sensors?
+\item {\bfseries{Solution:\+}} Check build logs with {\ttfamily platformio run -\/e env-\/name -\/v}
+\end{DoxyItemize}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md24}{}\doxysection{\texorpdfstring{Advanced Usage}{Advanced Usage}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md24}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md25}{}\doxysubsection{\texorpdfstring{Adding a Third Sensor}{Adding a Third Sensor}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md25}
+
+\begin{DoxyEnumerate}
+\item Create {\ttfamily main/\+third\+\_\+sensor.\+c} and {\ttfamily main/\+third\+\_\+sensor.\+h}
+\item Wrap with {\ttfamily \#ifdef ENABLE\+\_\+\+THIRD\+\_\+\+SENSOR}
+\item Add to {\ttfamily config.\+h}:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ ENABLE\_THIRD\_SENSOR\ 1}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ THIRD\_SENSOR\_I2C\_PORT\ 0}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ THIRD\_SENSOR\_SDA\_GPIO\ 8}}
+
+\end{DoxyCode}
+
+\item Add stub functions in header for when disabled
+\item Add to {\ttfamily main/\+\+CMake\+Lists.\+txt}:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{idf\_component\_register(SRCS\ aht20.c\ max30101.c\ third\_sensor.c\ main.c\ ...)}
+
+\end{DoxyCode}
+
+\item Update {\ttfamily pub\+\_\+timer\+\_\+cb()} in main.\+c with {\ttfamily \#ifdef ENABLE\+\_\+\+THIRD\+\_\+\+SENSOR} blocks
+\item Create new environment in {\ttfamily platformio.\+ini} with appropriate build\+\_\+flags
+\end{DoxyEnumerate}\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md26}{}\doxysubsection{\texorpdfstring{Creating an "{}\+All Disabled"{} Build}{Creating an "{}\+All Disabled"{} Build}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md26}
+For testing/\+debugging without sensors:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[env:esp32s3-\/no-\/sensors]}
+\DoxyCodeLine{build\_flags\ =\ }
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_AHT20=0}
+\DoxyCodeLine{\ \ \ \ -\/DENABLE\_MAX30101=0}
+
+\end{DoxyCode}
+ This compiles BLE Mesh and publishing code only; helpful for gateway testing.\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md27}{}\doxysection{\texorpdfstring{Building for Multiple Devices}{Building for Multiple Devices}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md27}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md28}{}\doxysubsection{\texorpdfstring{Workflow}{Workflow}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md28}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ Board\ A:\ Both\ sensors}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3\ -\/t\ upload\ -\/-\/upload-\/port\ COM3}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Board\ B:\ AHT20\ only}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/aht20-\/only\ -\/t\ upload\ -\/-\/upload-\/port\ COM4}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ Board\ C:\ Custom\ pins\ (edit\ config\ first)}
+\DoxyCodeLine{platformio\ run\ -\/e\ esp32s3-\/custom\ -\/t\ upload\ -\/-\/upload-\/port\ COM5}
+
+\end{DoxyCode}
+\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md29}{}\doxysubsection{\texorpdfstring{Using pio project config}{Using pio project config}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md29}
+Create separate Platform\+IO projects if you need different persistent settings per board.\hypertarget{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md30}{}\doxysection{\texorpdfstring{Summary}{Summary}}\label{md__b_u_i_l_d___v_a_r_i_a_n_t_s_autotoc_md30}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Environment  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Sensors  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Use Case  \\
+{\ttfamily esp32s3}  &AHT20 + MAX30101  &All-\/in-\/one sensor board  \\
+{\ttfamily esp32s3-\/aht20-\/only}  &AHT20  &Temperature/\+humidity only  \\
+{\ttfamily esp32s3-\/max30101-\/only}  &MAX30101  &Heart rate/\+\+Sp\+O2 only  \\
+{\ttfamily esp32s3-\/custom}  &Flexible  &Custom GPIO pins  \\
+\end{DoxyTable}
+
+
+Choose the environment that matches your hardware, build, and upload! 

@@ -1,0 +1,9 @@
+<map id="main/sensors/SGP30.c" name="main/sensors/SGP30.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="8,5,164,32"/>
+<area shape="rect" id="Node000002" href="$config_8h.html" title="Compile&#45;time configuration for different ESP32&#45;S3 sensor configurations." alt="" coords="5,80,73,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,35,57,68,53,66,79,30"/>
+<area shape="rect" id="Node000003" href="$_s_g_p30_8h.html" title="SGP30 air quality sensor interface." alt="" coords="96,80,171,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="95,30,120,67,114,67,93,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="96,155,171,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="135,105,136,140,131,138,132,109"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="board_init" name="board_init">
+<area shape="rect" id="Node000001" title="Initialize board peripherals." alt="" coords="5,5,83,32"/>
+<area shape="rect" id="Node000002" href="$board_8c.html#a3ceeaa09d0a809b933e2a14190379172" title="Initialize LED GPIO pins to output and off state." alt="" coords="131,5,232,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,16,118,18,112,19,83,21"/>
+</map>

@@ -1,0 +1,52 @@
+<map id="main/main.c" name="main/main.c">
+<area shape="rect" id="Node000001" title="BLE Mesh vendor server with sensor integration and periodic publishing." alt="" coords="1212,5,1304,32"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,88,66,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1209,20,985,24,656,32,484,40,322,50,183,64,79,83,73,84,70,80,78,77,182,59,321,45,483,34,656,27,985,19,1214,20"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="90,88,154,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="1209,21,1000,26,698,35,391,53,264,66,168,83,162,84,159,80,167,77,263,61,390,48,697,30,1000,21,1214,20"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="179,88,257,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1209,21,1018,29,745,39,470,57,355,69,269,83,261,85,259,80,268,77,355,63,469,51,745,34,1018,23,1214,21"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="281,88,358,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1209,22,793,41,548,59,447,70,371,83,362,85,361,80,370,77,446,64,548,53,792,36,1214,21"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="382,88,470,115"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1209,20,1085,23,904,31,695,49,588,64,484,83,472,86,471,80,483,77,587,58,695,44,904,26,1085,18,1214,19"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="495,88,584,115"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1209,20,1101,26,948,35,772,52,683,66,596,83,585,85,584,80,595,77,682,61,772,47,947,29,1101,20,1214,20"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="608,88,756,115"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1209,24,1018,47,769,83,748,87,747,82,768,77,1018,42,1214,24"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="781,80,943,123"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1214,29,959,82,958,77,1209,29"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="968,80,1143,123"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1229,32,1123,76,1121,71,1224,33"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="1168,80,1349,123"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1260,31,1260,67,1256,63,1256,34"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="1372,80,1520,123"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="1288,30,1386,74,1381,73,1287,35"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="1544,88,1660,115"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="1305,27,1532,77,1548,84,1542,83,1531,83,1305,32"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="1684,88,1814,115"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="1305,22,1468,43,1673,77,1692,84,1687,84,1672,83,1467,48,1304,28"/>
+<area shape="rect" id="Node000015" href="$board_8h.html" title="Board&#45;specific LED and GPIO helpers." alt="" coords="1838,88,1902,115"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="1305,17,1401,20,1532,28,1679,46,1754,60,1827,77,1834,82,1829,81,1825,83,1753,65,1679,52,1531,34,1401,25,1305,23"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1926,88,2094,115"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="1305,20,1565,38,1739,55,1915,77,1943,85,1938,84,1914,83,1738,60,1565,43,1305,25"/>
+<area shape="rect" id="Node000018" href="$config_8h.html" title="Compile&#45;time configuration for different ESP32&#45;S3 sensor configurations." alt="" coords="2190,171,2257,197"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="1304,17,1475,17,1709,24,1829,31,1941,42,2037,57,2107,78,2201,161,2196,159,2105,82,2035,62,1941,47,1829,36,1709,29,1475,22,1305,22"/>
+<area shape="rect" id="Node000019" href="$aht20_8h.html" title="AHT20 temperature and humidity sensor interface." alt="" coords="2334,88,2449,115"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="1305,19,1805,37,2104,54,2229,65,2323,77,2341,84,2336,83,2322,83,2228,71,2104,60,1805,42,1305,24"/>
+<area shape="rect" id="Node000022" href="$max30101_8h.html" title="MAX30101 heart rate and SpO2 sensor interface." alt="" coords="2168,88,2311,115"/>
+<area shape="poly" id="edge22_Node000001_Node000022" title=" " alt="" coords="1305,18,1448,22,1657,31,1902,49,2151,77,2178,84,2172,84,2150,83,1901,54,1657,36,1448,27,1305,23"/>
+<area shape="rect" id="Node000023" href="$_s_g_p30_8h.html" title="SGP30 air quality sensor interface." alt="" coords="2473,88,2598,115"/>
+<area shape="poly" id="edge26_Node000001_Node000023" title=" " alt="" coords="1305,18,1869,36,2211,54,2354,65,2461,77,2483,84,2477,84,2460,83,2353,70,2210,59,1869,41,1305,24"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="1824,171,1916,197"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="1872,113,1872,157,1868,154,1868,117"/>
+<area shape="poly" id="edge19_Node000019_Node000018" title=" " alt="" coords="2368,115,2264,166,2262,161,2363,116"/>
+<area shape="rect" id="Node000020" title=" " alt="" coords="2368,171,2444,197"/>
+<area shape="poly" id="edge20_Node000019_Node000020" title=" " alt="" coords="2395,113,2403,157,2399,154,2392,117"/>
+<area shape="rect" id="Node000021" title=" " alt="" coords="2281,171,2345,197"/>
+<area shape="poly" id="edge21_Node000019_Node000021" title=" " alt="" coords="2382,114,2336,162,2334,157,2377,116"/>
+<area shape="poly" id="edge23_Node000022_Node000018" title=" " alt="" coords="2239,113,2231,158,2227,154,2235,117"/>
+<area shape="poly" id="edge24_Node000022_Node000020" title=" " alt="" coords="2266,113,2369,164,2364,163,2265,118"/>
+<area shape="poly" id="edge25_Node000022_Node000021" title=" " alt="" coords="2252,113,2294,160,2289,158,2250,118"/>
+<area shape="poly" id="edge27_Node000023_Node000020" title=" " alt="" coords="2518,114,2440,165,2438,160,2513,116"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="prov_complete" name="prov_complete">
+<area shape="rect" id="Node000001" title="Handle provisioning completion and turn off status LED." alt="" coords="5,5,112,32"/>
+<area shape="rect" id="Node000002" href="$board_8c.html#a1e260d8ae55d49d43ddf309ad368df26" title="Set LED GPIO level and track previous state." alt="" coords="160,5,297,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,16,147,18,141,19,112,21"/>
+</map>

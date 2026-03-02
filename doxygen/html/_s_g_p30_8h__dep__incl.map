@@ -1,0 +1,7 @@
+<map id="main/sensors/SGP30.h" name="main/sensors/SGP30.h">
+<area shape="rect" id="Node000001" title="SGP30 air quality sensor interface." alt="" coords="47,5,203,32"/>
+<area shape="rect" id="Node000002" href="$main_2main_8c.html" title="BLE Mesh vendor server with sensor integration and periodic publishing." alt="" coords="5,80,98,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,43,66,82,62,78,99,44"/>
+<area shape="rect" id="Node000003" href="$_s_g_p30_8c.html" title=" " alt="" coords="121,80,278,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="150,40,189,80,184,80,147,45"/>
+</map>

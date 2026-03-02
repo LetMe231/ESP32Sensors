@@ -1,0 +1,7 @@
+<map id="example_ble_mesh_config_server_cb" name="example_ble_mesh_config_server_cb">
+<area shape="rect" id="Node000001" title="Configuration server callback for model state changes." alt="" coords="280,5,455,48"/>
+<area shape="rect" id="Node000002" href="$main_2main_8c.html#a12fbcc517c402c44fa29f9dad1d1092b" title="Initialize BLE Mesh stack and provisioning bearers." alt="" coords="131,13,232,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="262,27,232,29,232,24,267,27"/>
+<area shape="rect" id="Node000003" href="$main_2main_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70" title="Application entry point." alt="" coords="5,13,83,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,27,83,29,83,24,118,26"/>
+</map>

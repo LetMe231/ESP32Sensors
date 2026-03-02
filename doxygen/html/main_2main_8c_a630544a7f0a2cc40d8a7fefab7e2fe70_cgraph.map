@@ -1,0 +1,38 @@
+<map id="app_main" name="app_main">
+<area shape="rect" id="Node000001" title="Application entry point." alt="" coords="5,217,83,244"/>
+<area shape="rect" id="Node000002" href="$aht20_8h.html#afcc6bc78780cb4b87c89be2e5884f6f1" title="Stub initialization when AHT20 is disabled." alt="" coords="179,90,256,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="51,215,81,172,104,147,129,127,165,112,162,116,132,131,107,151,86,175,55,218"/>
+<area shape="rect" id="Node000003" href="$main_2main_8c.html#a12fbcc517c402c44fa29f9dad1d1092b" title="Initialize BLE Mesh stack and provisioning bearers." alt="" coords="167,141,268,168"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="64,214,130,177,154,170,149,173,132,182,67,218"/>
+<area shape="rect" id="Node000014" href="$board_8c.html#a916f2adc2080b4fe88034086d107a8dc" title="Initialize board&#45;level hardware." alt="" coords="179,192,256,218"/>
+<area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="82,222,165,211,161,215,84,227"/>
+<area shape="rect" id="Node000016" href="$max30101_8h.html#af76306b2512cf4789c67e6f0dfb50a26" title="Stub initialization when MAX30101 is disabled." alt="" coords="165,242,270,269"/>
+<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="83,233,152,244,147,247,84,238"/>
+<area shape="rect" id="Node000017" href="$max30101_8h.html#a2dc7da42b5b3afe2e341808bab381d94" title="Stub sampler start when MAX30101 is disabled." alt="" coords="131,293,304,320"/>
+<area shape="poly" id="edge17_Node000001_Node000017" title=" " alt="" coords="66,242,132,278,150,287,145,288,130,283,65,247"/>
+<area shape="rect" id="Node000018" href="$_s_g_p30_8h.html#ae89ef6d5045059efbc29848aaa998288" title="Stub initialization when SGP30 is disabled." alt="" coords="177,344,258,370"/>
+<area shape="poly" id="edge18_Node000001_Node000018" title=" " alt="" coords="54,241,86,286,107,309,132,329,165,346,159,346,129,334,104,313,81,289,52,246"/>
+<area shape="rect" id="Node000004" href="$board_8c.html#a1e260d8ae55d49d43ddf309ad368df26" title="Set LED GPIO level and track previous state." alt="" coords="806,44,943,70"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="267,144,302,127,318,109,324,89,332,69,351,52,410,27,472,11,537,4,601,3,662,8,720,16,816,39,811,40,719,21,662,13,600,9,537,9,473,16,411,32,353,56,337,72,329,91,322,111,306,131,270,148"/>
+<area shape="rect" id="Node000005" href="$main_2main_8c.html#ae77b1dd1df5756e1fb940ccd59ca4b5e" title="Configuration server callback for model state changes." alt="" coords="380,66,555,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="267,138,372,112,367,115,269,143"/>
+<area shape="rect" id="Node000006" href="$main_2main_8c.html#aac29b4973bbff9d751ca5720584e7044" title="Vendor model callback for send/receive events." alt="" coords="376,133,559,176"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="267,152,362,153,358,155,269,157"/>
+<area shape="rect" id="Node000007" href="$main_2main_8c.html#ae851df26bfca3d7270354d8f3f7a2a3a" title="BLE Mesh provisioning callback for node events." alt="" coords="352,200,582,226"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="268,164,353,185,390,195,385,196,351,190,269,170"/>
+<area shape="rect" id="Node000008" href="$main_2main_8c.html#a07a0bb87283a1d544425b2c64bc45bda" title="Handle provisioning completion and turn off status LED." alt="" coords="630,108,737,134"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="548,196,581,185,619,165,651,145,656,143,622,169,583,190,550,202"/>
+<area shape="rect" id="Node000009" href="$main_2main_8c.html#a51c85c785ff418595fca6cb6bdeadaec" title="Sensor data publication callback." alt="" coords="634,200,733,226"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="583,210,621,213,616,213,583,216"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="725,104,820,75,815,77,727,110"/>
+<area shape="rect" id="Node000010" href="$aht20_8h.html#ac6edc10e16108823ec8740e5e65558eb" title="Stub read when AHT20 is disabled." alt="" coords="814,124,934,150"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="708,197,784,160,801,156,806,155,786,165,710,202"/>
+<area shape="rect" id="Node000011" href="$max30101_8h.html#a098f481c6ba110c617a896ec43f02cd4" title="Stub heart rate getter when MAX30101 is disabled." alt="" coords="789,174,960,201"/>
+<area shape="poly" id="edge11_Node000009_Node000011" title=" " alt="" coords="733,204,776,201,771,201,734,209"/>
+<area shape="rect" id="Node000012" href="$max30101_8h.html#ae8038b9b65d4df2dc274ff534c83a974" title="Stub raw value getter when MAX30101 is disabled." alt="" coords="785,225,964,252"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="734,217,772,224,766,224,734,222"/>
+<area shape="rect" id="Node000013" href="$max30101_8h.html#a654f1aab2d5deafacaa1b6c63ec94628" title="Stub SpO2 getter when MAX30101 is disabled." alt="" coords="804,276,945,302"/>
+<area shape="poly" id="edge13_Node000009_Node000013" title=" " alt="" coords="709,224,786,261,807,271,801,270,784,266,708,229"/>
+<area shape="rect" id="Node000015" href="$board_8c.html#a3ceeaa09d0a809b933e2a14190379172" title="Initialize LED GPIO pins to output and off state." alt="" coords="416,250,518,277"/>
+<area shape="poly" id="edge15_Node000014_Node000015" title=" " alt="" coords="257,212,353,236,404,249,398,250,351,241,257,217"/>
+</map>

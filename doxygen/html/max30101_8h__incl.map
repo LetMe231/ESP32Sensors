@@ -1,0 +1,9 @@
+<map id="main/sensors/max30101.h" name="main/sensors/max30101.h">
+<area shape="rect" id="Node000001" title="MAX30101 heart rate and SpO2 sensor interface." alt="" coords="48,5,222,32"/>
+<area shape="rect" id="Node000002" href="$config_8h.html" title="Compile&#45;time configuration for different ESP32&#45;S3 sensor configurations." alt="" coords="5,80,73,107"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,32,69,73,66,68,116,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="97,80,173,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,31,137,66,133,63,133,35"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="196,80,260,107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="152,30,203,70,198,71,150,35"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="example_ble_mesh_provisioning_cb" name="example_ble_mesh_provisioning_cb">
+<area shape="rect" id="Node000001" title="BLE Mesh provisioning callback for node events." alt="" coords="5,81,236,108"/>
+<area shape="rect" id="Node000002" href="$main_2main_8c.html#a07a0bb87283a1d544425b2c64bc45bda" title="Handle provisioning completion and turn off status LED." alt="" coords="284,31,390,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,78,271,58,266,61,182,83"/>
+<area shape="rect" id="Node000004" href="$main_2main_8c.html#a51c85c785ff418595fca6cb6bdeadaec" title="Sensor data publication callback." alt="" coords="287,107,386,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="236,106,275,112,269,113,237,111"/>
+<area shape="rect" id="Node000003" href="$board_8c.html#a1e260d8ae55d49d43ddf309ad368df26" title="Set LED GPIO level and track previous state." alt="" coords="459,5,596,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="390,34,446,29,441,31,391,40"/>
+<area shape="rect" id="Node000005" href="$aht20_8h.html#ac6edc10e16108823ec8740e5e65558eb" title="Stub read when AHT20 is disabled." alt="" coords="468,56,588,83"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="386,104,463,86,458,88,388,109"/>
+<area shape="rect" id="Node000006" href="$max30101_8h.html#a098f481c6ba110c617a896ec43f02cd4" title="Stub heart rate getter when MAX30101 is disabled." alt="" coords="442,107,613,133"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="387,117,429,120,424,120,387,123"/>
+<area shape="rect" id="Node000007" href="$max30101_8h.html#ae8038b9b65d4df2dc274ff534c83a974" title="Stub raw value getter when MAX30101 is disabled." alt="" coords="438,157,617,184"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="387,131,463,153,458,153,387,136"/>
+<area shape="rect" id="Node000008" href="$max30101_8h.html#a654f1aab2d5deafacaa1b6c63ec94628" title="Stub SpO2 getter when MAX30101 is disabled." alt="" coords="457,208,598,235"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="353,131,391,163,439,194,455,203,450,202,437,198,388,167,352,136"/>
+</map>
