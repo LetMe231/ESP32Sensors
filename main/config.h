@@ -119,6 +119,51 @@
 #endif // ENABLE_SGP30
 
 // ============================================================================
+// POWER MANAGEMENT CONFIGURATION
+// ============================================================================
+
+/**
+ * @brief Sensor publish interval in seconds.
+ *
+ * Increase this to reduce BLE TX duty cycle and extend battery life.
+ * 30 s gives a good balance between latency and power for battery nodes.
+ * Override with -DSENSOR_PUBLISH_INTERVAL_S=<n> in build flags.
+ */
+#ifndef SENSOR_PUBLISH_INTERVAL_S
+#define SENSOR_PUBLISH_INTERVAL_S 30
+#endif
+
+/**
+ * @brief Maximum CPU frequency (MHz) used by esp_pm_configure.
+ *
+ * 80 MHz is sufficient for BLE Mesh + I2C and saves ~35 % active current
+ * vs the default 240 MHz. Set to 160 or 240 if more throughput is needed.
+ */
+#ifndef PM_MAX_CPU_FREQ_MHZ
+#define PM_MAX_CPU_FREQ_MHZ 80
+#endif
+
+/**
+ * @brief Minimum CPU frequency (MHz) / RTC clock used during light sleep.
+ *
+ * The FreeRTOS tickless idle will drop to this frequency when no task is
+ * runnable. 10 MHz keeps RTC and BLE wakeup logic alive.
+ */
+#ifndef PM_MIN_CPU_FREQ_MHZ
+#define PM_MIN_CPU_FREQ_MHZ 10
+#endif
+
+/**
+ * @brief Seconds to keep the provisioning LED on while unprovisioned.
+ *
+ * After this timeout the green LED is turned off to stop wasting ~15 mA.
+ * The node continues advertising; the LED simply turns off.
+ */
+#ifndef PROV_LED_TIMEOUT_S
+#define PROV_LED_TIMEOUT_S 60
+#endif
+
+// ============================================================================
 // EXAMPLE CONFIGURATIONS
 // ============================================================================
 

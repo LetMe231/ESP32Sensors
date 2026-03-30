@@ -45,8 +45,10 @@
 #define REG_MULTI_LED_CTRL2 0x12
 
 // HR/SpO2 Algorithm Parameters
-#define SAMPLE_BUFFER_SIZE 100
-#define MIN_PEAK_DISTANCE 40      // ~300 BPM max at 100Hz
+#define SAMPLE_RATE_HZ       25   // Reduced from 100 Hz — saves ~75 % sensor power
+#define SAMPLE_PERIOD_MS     (1000 / SAMPLE_RATE_HZ)  // 40 ms per sample
+#define SAMPLE_BUFFER_SIZE   100  // 100 samples @ 25 Hz = 4 seconds of PPG data
+#define MIN_PEAK_DISTANCE    10   // At 25 Hz: 10 samples = 0.4 s → max ~150 BPM
 #define PEAK_THRESHOLD_RATIO 0.6f // Peak threshold: 60% above minimum
 
 // PPG Data Buffer
@@ -183,8 +185,8 @@ static uint8_t calculate_heart_rate(void)
 
     if (avg_interval == 0) return 0;
 
-    // Convert to BPM (100 samples/sec)
-    uint32_t bpm = (100 * 60) / avg_interval;
+    // Convert to BPM using actual sample rate
+    uint32_t bpm = (SAMPLE_RATE_HZ * 60) / avg_interval;
     
     // Sanity check (30-220 BPM)
     if (bpm < 30 || bpm > 220) return 0;
@@ -264,7 +266,7 @@ static void ppg_sampling_task(void *arg)
             s_latest_raw_red = red;
             s_latest_raw_ir = ir;
             
-            // Update HR and SpO2 every 10 samples (~100ms)
+            // Update HR and SpO2 every 10 samples (~400 ms at 25 Hz)
             static uint8_t sample_count = 0;
             if (++sample_count >= 10) {
                 sample_count = 0;
@@ -277,7 +279,7 @@ static void ppg_sampling_task(void *arg)
             }
         }
         
-        vTaskDelay(pdMS_TO_TICKS(10)); // 100Hz sampling
+        vTaskDelay(pdMS_TO_TICKS(SAMPLE_PERIOD_MS)); // 25 Hz sampling
     }
 }
 
@@ -336,12 +338,15 @@ esp_err_t max30101_init(void)
     // SpO2 mode (RED + IR)
     max30101_write(REG_MODE_CONFIG, 0x03);
 
-    // SpO2 config: ADC=4096nA, 100sps, 411us pulse width
-    max30101_write(REG_SPO2_CONFIG, 0x3B);
+    // SpO2 config: ADC=4096nA, 25 sps (bits[4:2]=0b001), 411 us pulse width
+    // REG_SPO2_CONFIG: [6:5]=ADC range 4096nA, [4:2]=sample rate, [1:0]=pulse width 411us
+    // 0x27 = 0b00_100_11 → ADC=4096nA, 25sps, 411us  (was 0x3B = 100sps)
+    max30101_write(REG_SPO2_CONFIG, 0x27);
 
-    // LED currents
-    max30101_write(REG_LED1_PA, 0x24); // RED
-    max30101_write(REG_LED2_PA, 0x24); // IR
+    // LED currents — reduced from 0x24 (~7.2 mA) to 0x0F (~4.7 mA) to save power.
+    // Adequate for finger/wrist contact; increase to 0x1F if signal is too weak.
+    max30101_write(REG_LED1_PA, 0x0F); // RED
+    max30101_write(REG_LED2_PA, 0x0F); // IR
 
     ESP_LOGI(TAG, "MAX30101 initialized successfully");
     return ESP_OK;
