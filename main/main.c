@@ -25,6 +25,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "esp_timer.h"
+#include "esp_pm.h"
 
 #include "esp_ble_mesh_defs.h"
 #include "esp_ble_mesh_common_api.h"
@@ -71,8 +72,9 @@ static uint32_t ble_seq = 0;
 #define PROP_SEQ          0x07FF   /**< Custom property for sequence number (for testing) */
 
 // Timer Intervals (microseconds)
-#define SENSOR_PUBLISH_INTERVAL_US  (2 * 1000 * 1000)  /**< 2 seconds */
-#define SGP30_MEASUREMENT_INTERVAL_US (1 * 1000 * 1000) /**< 1 second */
+/** @brief Publish interval derived from config.h — increase for longer battery life. */
+#define SENSOR_PUBLISH_INTERVAL_US  ((uint64_t)SENSOR_PUBLISH_INTERVAL_S * 1000 * 1000)
+#define SGP30_MEASUREMENT_INTERVAL_US (1 * 1000 * 1000) /**< 1 second — SGP30 baseline requires 1 Hz */
 
 // Sentinel values for invalid sensor readings
 #define SENSOR_INVALID_U8   0xFF
@@ -420,8 +422,23 @@ static esp_ble_mesh_prov_t provision = {
 /** @brief Publication timer handle. */
 static esp_timer_handle_t pub_timer;
 
+/** @brief One-shot timer that turns off the provisioning LED after PROV_LED_TIMEOUT_S. */
+static esp_timer_handle_t prov_led_timer;
+
 /** @brief Pointer to the Sensor Server model (set after provisioning). */
 static esp_ble_mesh_model_t *s_sensor_model;
+
+/**
+ * @brief One-shot callback: turn off provisioning LED after PROV_LED_TIMEOUT_S.
+ *
+ * Saves ~15 mA once the node is advertising but not yet provisioned.
+ */
+static void prov_led_timeout_cb(void *arg)
+{
+    (void)arg;
+    board_led_operation(LED_GREEN, LED_OFF);
+    ESP_LOGI(TAG, "Provisioning LED timeout — LED off");
+}
 
 #if ENABLE_SGP30
 /** @brief SGP30 1 Hz baseline timer. */
@@ -822,8 +839,16 @@ static esp_err_t ble_mesh_init(void)
         return err;
     }
 
-    /* Green LED = waiting for provisioning */
+    /* Green LED = waiting for provisioning; turn it off after timeout to save power */
     board_led_operation(LED_GREEN, LED_ON);
+    const esp_timer_create_args_t led_timer_args = {
+        .callback = &prov_led_timeout_cb,
+        .name     = "prov_led_timeout",
+    };
+    if (esp_timer_create(&led_timer_args, &prov_led_timer) == ESP_OK) {
+        esp_timer_start_once(prov_led_timer,
+                             (uint64_t)PROV_LED_TIMEOUT_S * 1000 * 1000);
+    }
     ESP_LOGI(TAG, "BLE Mesh Sensor Server node ready (PB-ADV + PB-GATT)");
 
     return ESP_OK;
@@ -847,6 +872,24 @@ void app_main(void)
         err = nvs_flash_init();
     }
     ESP_ERROR_CHECK(err);
+
+    /* ---- Power Management ---- */
+    /* Enable automatic light sleep: FreeRTOS tickless idle will drop the CPU
+     * to ~2 mA between timer wakeups instead of spinning at ~80 mA.
+     * Requires CONFIG_PM_ENABLE=y in sdkconfig. */
+    esp_pm_config_t pm_config = {
+        .max_freq_mhz       = PM_MAX_CPU_FREQ_MHZ,
+        .min_freq_mhz       = PM_MIN_CPU_FREQ_MHZ,
+        .light_sleep_enable = true,
+    };
+    esp_err_t pm_err = esp_pm_configure(&pm_config);
+    if (pm_err != ESP_OK) {
+        ESP_LOGW(TAG, "esp_pm_configure failed (%s) — running without light sleep",
+                 esp_err_to_name(pm_err));
+    } else {
+        ESP_LOGI(TAG, "Power management: max=%d MHz, min=%d MHz, light sleep=ON",
+                 PM_MAX_CPU_FREQ_MHZ, PM_MIN_CPU_FREQ_MHZ);
+    }
 
     /* ---- Board ---- */
     board_init();

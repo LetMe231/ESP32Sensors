@@ -28,7 +28,7 @@ esp_err_t max30101_init(void);
 /**
  * @brief Start the background task for continuous PPG sampling
  * 
- * This task samples the MAX30101 at 100Hz and continuously computes
+ * This task samples the MAX30101 at 25 Hz and continuously computes
  * heart rate and SpO2 values in the background.
  * 
  * @return esp_err_t ESP_OK on success
