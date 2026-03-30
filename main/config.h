@@ -32,6 +32,24 @@
 #ifndef BLE_MESH_DEVICE_NAME
 #define BLE_MESH_DEVICE_NAME "ESP32-S3-Sensor"
 #endif
+
+// ============================================================================
+// BLE MESH SENSOR PROPERTY IDs
+// ============================================================================
+
+// Standard Bluetooth SIG Property IDs
+#define PROP_TEMPERATURE     0x004F
+#define PROP_HUMIDITY        0x0076
+#define PROP_ECO2            0x0008
+
+// Custom Property IDs (0x0100+ für nicht-standardisierte Sensoren)
+#define PROP_HEART_RATE      0x0100
+#define PROP_SPO2            0x0101
+#define PROP_TVOC            0x0102
+#define PROP_RAW_RED         0x0103
+#define PROP_RAW_IR          0x0104
+
+
 // ============================================================================
 // I2C CONFIGURATION - AHT20 (Temperature/Humidity)
 // ============================================================================
