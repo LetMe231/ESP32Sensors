@@ -15,7 +15,7 @@
 // Default configuration: Both sensors enabled
 /** @brief Enable AHT20 sensor driver (1=enabled, 0=disabled). */
 #ifndef ENABLE_AHT20
-#define ENABLE_AHT20 0
+#define ENABLE_AHT20 1
 #endif
 
 /** @brief Enable MAX30101 sensor driver (1=enabled, 0=disabled). */
@@ -31,6 +31,30 @@
 /** @brief Unprovisioned BLE Mesh device name. */
 #ifndef BLE_MESH_DEVICE_NAME
 #define BLE_MESH_DEVICE_NAME "ESP32-S3-Sensor"
+#endif
+
+/** @brief Enable button input (1=enabled, 0=disabled).
+ *  Sends {"sw":1} via CoAP (Thread) or PROP_SWITCH publish (BLE Mesh)
+ *  on press. Pullup internal, active-low (press = GND).
+ */
+#ifndef ENABLE_BUTTON
+#define ENABLE_BUTTON 1
+#endif
+ 
+#ifndef BUTTON_GPIO_PIN
+#define BUTTON_GPIO_PIN 21
+#endif
+ 
+/** @brief Enable WS2812 RGB light output (1=enabled, 0=disabled).
+ *  Thread:   reacts to CoAP PUT /light {"on":true/false}
+ *  BLE Mesh: reacts to Generic OnOff Set (model ID 0x1000)
+ */
+#ifndef ENABLE_LIGHT
+#define ENABLE_LIGHT 1
+#endif
+ 
+#ifndef LIGHT_GPIO_PIN
+#define LIGHT_GPIO_PIN 38
 #endif
 
 // ============================================================================
@@ -108,10 +132,10 @@
 #endif
 
 #ifndef SGP30_SDA_GPIO
-#define SGP30_SDA_GPIO 1
+#define SGP30_SDA_GPIO 5
 #endif
 #ifndef SGP30_SCL_GPIO
-#define SGP30_SCL_GPIO 2
+#define SGP30_SCL_GPIO 4
 #endif
 #ifndef SGP30_FREQ_HZ
 #define SGP30_FREQ_HZ 100000

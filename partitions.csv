@@ -1,0 +1,24 @@
+# ESP32-S3 Partition Table — enlarged app slot for BLE Mesh baseline build
+#
+# Rationale:
+#   The default 1 MB app partition overflows once BASELINE_TEST is enabled
+#   (boot_id persistence + extra PROP_* marshalling push the image to
+#   ~1.06 MB). The ESP32-S3 devkits ship with ≥4 MB flash so we simply
+#   widen the app slot to 2 MB — plenty of headroom for future growth.
+#
+# Layout (4 MB target flash; shift end offsets if you use 8 MB):
+#   nvs       0x009000   24 KB    (boot_id, seq_hi, other NVS keys)
+#   phy_init  0x00F000    4 KB    (RF calibration)
+#   factory   0x010000    2 MB    (application)
+#   coredump  0x210000   64 KB    (panic core dumps — useful for thesis)
+#   —— rest of flash unused ——
+#
+# Offsets MUST be 64 KB aligned for app partitions. Verify with:
+#   python $IDF_PATH/components/partition_table/gen_esp32part.py \
+#       partitions.csv
+#
+# Name,     Type, SubType,  Offset,   Size,    Flags
+nvs,        data, nvs,      0x9000,   0x6000,
+phy_init,   data, phy,      0xf000,   0x1000,
+factory,    app,  factory,  0x10000,  0x200000,
+coredump,   data, coredump, 0x210000, 0x10000,
