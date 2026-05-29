@@ -15,7 +15,7 @@
 // Default configuration: Both sensors enabled
 /** @brief Enable AHT20 sensor driver (1=enabled, 0=disabled). */
 #ifndef ENABLE_AHT20
-#define ENABLE_AHT20 1
+#define ENABLE_AHT20 0
 #endif
 
 /** @brief Enable MAX30101 sensor driver (1=enabled, 0=disabled). */
@@ -25,7 +25,7 @@
 
 /** @brief Enable SGP30 sensor driver (1=enabled, 0=disabled). */
 #ifndef ENABLE_SGP30
-#define ENABLE_SGP30 0
+#define ENABLE_SGP30 1
 #endif
 
 /** @brief Unprovisioned BLE Mesh device name. */
@@ -154,7 +154,7 @@
  * Override with -DSENSOR_PUBLISH_INTERVAL_S=<n> in build flags.
  */
 #ifndef SENSOR_PUBLISH_INTERVAL_S
-#define SENSOR_PUBLISH_INTERVAL_S 30
+#define SENSOR_PUBLISH_INTERVAL_S 0.1
 #endif
 
 /**
@@ -184,7 +184,128 @@
  * The node continues advertising; the LED simply turns off.
  */
 #ifndef PROV_LED_TIMEOUT_S
-#define PROV_LED_TIMEOUT_S 60
+#define PROV_LED_TIMEOUT_S 300
+#endif
+
+// ============================================================================
+// DETERMINISTIC TEST / THESIS MEASUREMENT CONFIGURATION
+// ============================================================================
+
+/**
+ * BASELINE_TEST:
+ * Enables deterministic timing helpers in the node firmware.
+ *
+ * TEST_PROFILE:
+ * Replaces real sensor values with deterministic synthetic values.
+ * This is intended for BA/Thesis scheduler measurements where node behavior
+ * must be reproducible across runs.
+ */
+#ifndef BASELINE_TEST
+#define BASELINE_TEST 0
+#endif
+
+#ifndef TEST_PROFILE
+#define TEST_PROFILE 0
+#endif
+
+#if TEST_PROFILE && !BASELINE_TEST
+#warning "TEST_PROFILE is enabled without BASELINE_TEST. Deterministic timing is recommended."
+#endif
+
+/**
+ * Logical node id used only for deterministic test scenarios.
+ *
+ * Recommended mapping:
+ *   BLE_0     = 0
+ *   BLE_1     = 1
+ *   BLE_2     = 2
+ *   THREAD_0  = 3
+ *   THREAD_1  = 4
+ *   THREAD_2  = 5
+ *   THREAD_3  = 6
+ */
+#ifndef TEST_NODE_ID
+#define TEST_NODE_ID 0
+#endif
+
+/**
+ * TX phase offset in milliseconds.
+ *
+ * Recommended offsets for 1 Hz traffic:
+ *   BLE_0     0 ms
+ *   BLE_1     150 ms
+ *   BLE_2     300 ms
+ *   THREAD_0  450 ms
+ *   THREAD_1  600 ms
+ *   THREAD_2  750 ms
+ *   THREAD_3  900 ms
+ */
+#ifndef TEST_TX_OFFSET_MS
+#define TEST_TX_OFFSET_MS 0
+#endif
+
+/**
+ * Delay after the node is ready before the measurement timeline starts.
+ * Gives the gateway and network time to settle.
+ */
+#ifndef TEST_RUN_DELAY_MS
+#define TEST_RUN_DELAY_MS 10000
+#endif
+
+#define TEST_SCENARIO_NONE         0
+#define TEST_SCENARIO_BLE_ALERT    1
+#define TEST_SCENARIO_THREAD_ALERT 2
+#define TEST_SCENARIO_BOTH_ALERT   3
+
+#ifndef TEST_SCENARIO
+#define TEST_SCENARIO TEST_SCENARIO_NONE
+#endif
+
+#ifndef TEST_ALERT_BLE_NODE_ID
+#define TEST_ALERT_BLE_NODE_ID 1
+#endif
+
+#ifndef TEST_ALERT_THREAD_NODE_ID
+#define TEST_ALERT_THREAD_NODE_ID 5
+#endif
+
+#ifndef TEST_ALERT_START_MS
+#define TEST_ALERT_START_MS 600000
+#endif
+
+#ifndef TEST_ALERT_END_MS
+#define TEST_ALERT_END_MS 1200000
+#endif
+
+/**
+ * Optional for BLE Mesh phase-based publishing.
+ * 0 normally maps to the first enabled periodic property.
+ */
+#ifndef TEST_INITIAL_PUB_PHASE
+#define TEST_INITIAL_PUB_PHASE 0
+#endif
+
+/**
+ * Thread node TX interval.
+ * BLE Mesh uses SENSOR_PUBLISH_INTERVAL_S instead
+ */
+#ifndef TX_INTERVAL_MS
+#  if BASELINE_TEST
+#    define TX_INTERVAL_MS 1000
+#  else
+#    define TX_INTERVAL_MS 5000
+#  endif
+#endif
+
+/**
+ * BLE Mesh publish interval.
+ */
+#ifndef SENSOR_PUBLISH_INTERVAL_S
+#  if BASELINE_TEST
+#    define SENSOR_PUBLISH_INTERVAL_S 0.1
+#  else
+#    define SENSOR_PUBLISH_INTERVAL_S 5
+#  endif
 #endif
 
 // ============================================================================
